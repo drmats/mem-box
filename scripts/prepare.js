@@ -9,7 +9,6 @@ var
     {
         copyFileSync,
         mkdirSync,
-        readdirSync,
         writeFileSync,
     } = require("fs"),
 
@@ -22,11 +21,6 @@ var
         "typings": "./index.d.ts",
     }),
 
-    tsFiles = dir =>
-        readdirSync(dir, { withFileTypes: true })
-            .filter(de => de.isFile() && de.name.endsWith(".d.ts"))
-            .map(de => de.name),
-
     packageJson = require("../package.json"),
 
     distJson = require("./dist.template.json");
@@ -34,7 +28,7 @@ var
 
 
 
-console.info("Copying type declarations and module configs ...");
+console.info("Copying module configs ...");
 
 
 
@@ -44,9 +38,6 @@ require("./module_names")
     .forEach(mn => {
         let src = `${srcDir}/${mn}`, dst = `${distDir}/${mn}`;
         mkdirSync(dst, { recursive: true });
-        tsFiles(`${src}/`).forEach(f => {
-            copyFileSync(`${src}/${f}`, `${dst}/${f}`);
-        });
         writeFileSync(
             `${dst}/package.json`,
             JSON.stringify(esConfig(mn))
