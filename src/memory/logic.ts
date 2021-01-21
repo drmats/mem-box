@@ -12,8 +12,8 @@
 import {
     identity,
     lazyish,
-} from "../func/tools";
-import { assign } from "../struct/data";
+} from "@xcmats/js-toolbox/func";
+import { assign } from "@xcmats/js-toolbox/struct";
 
 
 
