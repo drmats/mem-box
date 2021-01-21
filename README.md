@@ -30,8 +30,8 @@ anti-pattern.
 Another solution is to pass these objects as parameters to functions that
 needs to use them, but it's cumbersome and scales poorly.
 
-Using `mem-box` solves these problems and resembles the usage of Hooks
-in React.
+Using `mem-box` solves these problems and resembles the usage of `hooks`
+in `react`.
 
 <br />
 
