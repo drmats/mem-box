@@ -12,22 +12,79 @@ Shared memory.
 $ npm i mem-box
 ```
 
-Works in [node.js](https://nodejs.org/) and browser environments.
-
 <br />
 
 
 
 
-## index
+## shared memory pattern
 
-* [documentation](#documentation)
-* [namespaces](#namespaces)
-    - [memory](#shared-memory)
-* [examples](#examples)
-    - [shared memory pattern](#shared-memory-pattern)
-* [notes](#notes)
-* [license](#license)
+Frontend and backend applications often use some globally-configured objects,
+like `axios` instance with custom headers and base url, authenticated cloud
+services provider, `express.js` instance, database connection object,
+configured `redux` store, etc...
+
+One might stick these to `window` (or `global`) object, but it's considered
+anti-pattern.
+
+Another solution is to pass these objects as parameters to functions that
+needs to use them, but it's cumbersome and scales poorly.
+
+Using `mem-box` solves these problems and resembles the usage of Hooks
+in React.
+
+Example:
+
+* `main.js` file of an express.js-based microservice application:
+
+    ```javascript
+    import express, { json } from "express";
+    import { share } from "mem-box/memory";
+    import configureRoutes from "./routes";
+
+    // main express application
+    const app = express();
+
+    // share it with any other module interested
+    share({ app });
+
+    // some configuration
+    app.enable("trust proxy");
+    app.use(json());
+
+    // complex configuration - e.g. enable CORS,
+    // authentication, redirects, etc.
+
+    // configureHeaders();
+    // configureAuth();
+    // configureRedirects();
+
+    // ...
+
+    // routes configuration
+    configureRoutes();
+
+    app.listen(/* ... */);
+    ```
+
+* example `routes.js` file:
+
+    ```javascript
+    import { useMemory } from "mem-box/memory";
+
+    export default configureRoutes () {
+
+        // get access to main express application
+        const { app } = useMemory();
+
+        // add "hello world" route
+        app.get("/hello/", (req, res, next) => {
+            res.status(200).send({ hello: "world" });
+            return next();
+        });
+
+    }
+    ```
 
 <br />
 
@@ -55,82 +112,6 @@ memory
 > { useMemory: [Function: useMemory],
 >   share: [Function: share] }
 > ```
-
-
-
-
-## examples
-
-### shared memory pattern
-
-Frontend and backend applications often use some globally-configured objects,
-like axios instance with custom headers and base url, authenticated cloud
-services provider, express.js instance, database connection object,
-configured redux store, etc...
-
-One might stick these to `window` (or `global`) object, but it's considered
-anti-pattern.
-
-Another solution is to pass these objects as parameters to functions that
-needs to use them, but it's cumbersome and scales poorly.
-
-Using `memory` module solves these problems and resembles
-the usage of Hooks in React.
-
-Example:
-
-* `main.js` file of an express.js-based microservice application:
-
-    ```javascript
-    import express, { json } from "express"
-    import { share } from "mem-box/memory"
-    import configureRoutes from "./routes"
-
-    // main express application
-    const app = express()
-
-    // share it with any other module interested
-    share({ app })
-
-    // some configuration
-    app.enable("trust proxy")
-    app.use(json())
-
-    // complex configuration - e.g. enable CORS,
-    // authentication, redirects, etc.
-
-    // configureHeaders()
-    // configureAuth()
-    // configureRedirects()
-
-    // ...
-
-    // routes configuration
-    configureRoutes()
-
-    app.listen(/* ... */)
-    ```
-
-* example `routes.js` file:
-
-    ```javascript
-    import { useMemory } from "mem-box/memory"
-
-    export default configureRoutes () {
-
-        // get access to main express application
-        const { app } = useMemory()
-
-        // add "hello world" route
-        app.get("/hello/", (req, res, next) => {
-            res.status(200).send({ hello: "world" })
-            return next()
-        })
-
-    }
-    ```
-
-<br />
 
 
 
