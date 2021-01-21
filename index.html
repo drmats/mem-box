@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Home - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Modules</li><li class="nav-heading"><span class="nav-item-type type-module">M</span><span class="nav-item-name"><a href="module-memory.html">memory</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-memory.html#~memory">memory</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-memory.html#~share">share</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-memory.html#~useMemory">useMemory</a></span></li>
+</nav>
+
+<div id="main">
+    
+
+    
+
+
+
+    
+
+
+
+
+
+
+
+
+
+    
+
+
+    <section class="readme">
+        <article><h1>mem-box</h1>
+<p>Shared memory.</p>
+<p><a href="https://www.npmjs.com/package/mem-box"><img src="https://img.shields.io/npm/v/mem-box.svg" alt="npm version"></a>
+<a href="https://www.npmjs.com/package/mem-box"><img src="https://img.shields.io/npm/l/mem-box.svg" alt="npm license"></a>
+<a href="https://github.com/drmats/mem-box"><img src="https://img.shields.io/github/languages/top/drmats/mem-box.svg" alt="GitHub top language"></a>
+<a href="https://github.com/drmats/mem-box"><img src="https://img.shields.io/github/languages/code-size/drmats/mem-box.svg" alt="GitHub code size"></a>
+<a href="https://github.com/drmats/mem-box"><img src="https://img.shields.io/github/tag/drmats/mem-box.svg" alt="GitHub tag"></a></p>
+<pre class="prettyprint source lang-bash"><code>$ npm i mem-box
+</code></pre>
+<br />
+<h2>shared memory pattern</h2>
+<p>Frontend and backend applications often use some globally-configured objects,
+like <code>axios</code> instance with custom headers and base url, authenticated cloud
+services provider, <code>express.js</code> instance, database connection object,
+configured <code>redux</code> store, etc...</p>
+<p>One might stick these to <code>window</code> (or <code>global</code>) object, but it's considered
+anti-pattern.</p>
+<p>Another solution is to pass these objects as parameters to functions that
+needs to use them, but it's cumbersome and scales poorly.</p>
+<p>Using <code>mem-box</code> solves these problems and resembles the usage of Hooks
+in React.</p>
+<p>Example:</p>
+<ul>
+<li>
+<p><code>main.js</code> file of an express.js-based microservice application:</p>
+<pre class="prettyprint source lang-javascript"><code>import express, { json } from &quot;express&quot;;
+import { share } from &quot;mem-box/memory&quot;;
+import configureRoutes from &quot;./routes&quot;;
+
+// main express application
+const app = express();
+
+// share it with any other module interested
+share({ app });
+
+// some configuration
+app.enable(&quot;trust proxy&quot;);
+app.use(json());
+
+// complex configuration - e.g. enable CORS,
+// authentication, redirects, etc.
+
+// configureHeaders();
+// configureAuth();
+// configureRedirects();
+
+// ...
+
+// routes configuration
+configureRoutes();
+
+app.listen(/* ... */);
+</code></pre>
+</li>
+<li>
+<p>example <code>routes.js</code> file:</p>
+<pre class="prettyprint source lang-javascript"><code>import { useMemory } from &quot;mem-box/memory&quot;;
+
+export default configureRoutes () {
+
+    // get access to main express application
+    const { app } = useMemory();
+
+    // add &quot;hello world&quot; route
+    app.get(&quot;/hello/&quot;, (req, res, next) => {
+        res.status(200).send({ hello: &quot;world&quot; });
+        return next();
+    });
+
+}
+</code></pre>
+</li>
+</ul>
+<br />
+<h2>documentation</h2>
+<blockquote>
+<p><a href="https://drmats.github.io/mem-box/">API Reference</a></p>
+</blockquote>
+<br />
+<h2>namespace</h2>
+<h3>shared <strong>memory</strong></h3>
+<pre class="prettyprint source lang-javascript"><code>memory
+</code></pre>
+<blockquote>
+<pre class="prettyprint source lang-javascript"><code>{ useMemory: [Function: useMemory],
+  share: [Function: share] }
+</code></pre>
+</blockquote>
+<h2>notes</h2>
+<p>This library is suitable to use in server and browser environments
+and it is being used as such.
+Go ahead and <a href="https://github.com/drmats/mem-box/issues/new">file an issue</a>
+if you found a bug 🐞.</p>
+</br>
+<h2>support</h2>
+<p>You can support this project via <a href="https://learn.stellar.org">stellar</a> network:</p>
+<ul>
+<li>Payment address: <a href="https://keybase.io/xcmats">xcmats*keybase.io</a></li>
+<li>Stellar account ID: <a href="https://keybase.io/xcmats/sigchain#d0999a36b501c4818c15cf813f5a53da5bfe437875d92262be8d285bbb67614e22"><code>GBYUN4PMACWBJ2CXVX2KID3WQOONPKZX2UL4J6ODMIRFCYOB3Z3C44UZ</code></a></li>
+</ul>
+<br />
+<h2>license</h2>
+<p><strong>mem-box</strong> is released under the Apache License, Version 2.0. See the
+<a href="https://github.com/drmats/mem-box/blob/master/LICENSE">LICENSE</a>
+for more details.</p></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a> on Thu Jan 21 2021 12:29:29 GMT+0100 (Central European Standard Time) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>
