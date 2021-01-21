@@ -21,6 +21,7 @@ import { assign } from "@xcmats/js-toolbox/struct";
 /**
  * Application logic shared memory structure.
  *
+ * @private
  * @function memory
  * @returns memory object
  */
