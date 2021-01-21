@@ -33,13 +33,18 @@ needs to use them, but it's cumbersome and scales poorly.
 Using `mem-box` solves these problems and resembles the usage of Hooks
 in React.
 
-Example:
+<br />
+
+
+
+
+## example
 
 * `main.js` file of an express.js-based microservice application:
 
     ```javascript
     import express, { json } from "express";
-    import { share } from "mem-box/memory";
+    import { share } from "mem-box";
     import configureRoutes from "./routes";
 
     // main express application
@@ -70,7 +75,7 @@ Example:
 * example `routes.js` file:
 
     ```javascript
-    import { useMemory } from "mem-box/memory";
+    import { useMemory } from "mem-box";
 
     export default configureRoutes () {
 
