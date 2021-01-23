@@ -53,5 +53,5 @@ export function useMemory<T> (f: (x: T) => T = identity): T {
  * @returns extended memory object
  */
 export function share<T> (ext: T): T {
-    return useMemory(ctx => assign(ctx, ext));
+    return useMemory((ctx) => assign(ctx, ext));
 }
