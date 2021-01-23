@@ -42,7 +42,7 @@ in `react`.
 * `main.js` file of an `express.js`-based microservice application:
 
     ```javascript
-    import express, { json } from "express";
+    import express from "express";
     import { share } from "mem-box";
     import configureRoutes from "./routes";
 
@@ -52,17 +52,8 @@ in `react`.
     // share it with any other module interested
     share({ app });
 
-    // some configuration
-    app.enable("trust proxy");
-    app.use(json());
-
     // complex configuration - e.g. enable CORS,
     // authentication, redirects, etc.
-
-    // configureHeaders();
-    // configureAuth();
-    // configureRedirects();
-
     // ...
 
     // routes configuration
@@ -86,6 +77,94 @@ in `react`.
             res.status(200).send({ hello: "world" });
             return next();
         });
+
+    }
+    ```
+
+<br />
+
+
+
+
+## usage with [typescript](https://www.typescriptlang.org/)
+
+In order to provide type-safety (and nice
+[IntelliSense](https://code.visualstudio.com/docs/editor/intellisense) hints)
+[declaration merging](https://www.typescriptlang.org/docs/handbook/declaration-merging.html)
+typescript feature can be utilized.
+
+* `main.ts` file of an `express.js`-based microservice application:
+
+    ```typescript
+    import express from "express";
+    import { share } from "mem-box";
+    import configureAuth from "./auth";
+
+    // main express application
+    const app = express();
+
+    // private key (read from env or keystore in real-world)
+    const secretKey = "-----BEGIN PRIVATE KEY-----\nMIIEvqhkiGwggSiAgEqh...";
+
+    // share with other modules
+    share({ app, secretKey });
+
+    // authentication config (based on external service provider)
+    configureAuth();
+
+    // ...
+
+    app.listen(/* ... */);
+
+    // global declaration merging
+    declare global {
+
+        // shared memory type augmentation
+        interface Mem {
+            app: ReturnType<typeof express>;
+            secretKey: string;
+        }
+
+    }
+    ```
+
+* example `auth.ts` file:
+
+    ```typescript
+    import type { RequestHandler } from "express";
+    import { someservice } from "someserviceapis"; // imaginary auth provider
+    import { share, useMemory } from "mem-box";
+
+    // ...
+    export default configureAuth (): void {
+
+        // get access to secret (explicit type hint)
+        const { secretKey } = useMemory<Mem>();
+
+        // obtain JSON Web Token from external provider
+        const jwt = new someservice.auth.JWT({
+            secretKey, /* scopes: [...], subject: ..., */
+        });
+
+        // build middleware for usage in other modules
+        const authMw: RequestHandler = (req, res, next) => {
+            // do something with `jwt` const
+            // ...
+            return next();
+        };
+
+        // share it
+        share({ authMw });
+
+    }
+
+    // inform type system of new member in `Mem` interface
+    declare global {
+
+        // shared memory type augmentation
+        interface Mem {
+            authOrigin: RequestHandler;
+        }
 
     }
     ```
