@@ -3,10 +3,9 @@
 Shared memory.
 
 [![npm version](https://img.shields.io/npm/v/mem-box.svg)](https://www.npmjs.com/package/mem-box)
-[![npm license](https://img.shields.io/npm/l/mem-box.svg)](https://www.npmjs.com/package/mem-box)
-[![GitHub top language](https://img.shields.io/github/languages/top/drmats/mem-box.svg)](https://github.com/drmats/mem-box)
 [![GitHub code size](https://img.shields.io/github/languages/code-size/drmats/mem-box.svg)](https://github.com/drmats/mem-box)
 [![GitHub tag](https://img.shields.io/github/tag/drmats/mem-box.svg)](https://github.com/drmats/mem-box)
+[![npm license](https://img.shields.io/npm/l/mem-box.svg)](https://www.npmjs.com/package/mem-box)
 
 ```bash
 $ npm i mem-box
@@ -21,10 +20,10 @@ $ npm i mem-box
 
 Frontend and backend applications often use some globally-configured objects,
 like `axios` instance with custom headers and base url, authenticated cloud
-services provider, `express.js` instance, database connection object,
+services provider instance, `express.js` instance, database connection object,
 configured `redux` store, etc...
 
-One might stick these to `window` (or `global`) object, but it's considered
+One might stick these to `window` (or `global`) object, but it's considered an
 anti-pattern.
 
 Another solution is to pass these objects as parameters to functions that
@@ -40,7 +39,7 @@ in `react`.
 
 ## example
 
-* `main.js` file of an express.js-based microservice application:
+* `main.js` file of an `express.js`-based microservice application:
 
     ```javascript
     import express, { json } from "express";
