@@ -104,7 +104,7 @@ typescript feature can be utilized.
     const app = express();
 
     // private key (read from env or keystore in real-world)
-    const secretKey = "-----BEGIN PRIVATE KEY-----\nMIIEvqhkiGwggSiAgEqh...";
+    const secretKey = "-----BEGIN PRIVATE KEY-----\nMIIEvqhkiGwgEqh...";
 
     // share with other modules
     share({ app, secretKey });
@@ -132,7 +132,7 @@ typescript feature can be utilized.
 
     ```typescript
     import type { RequestHandler } from "express";
-    import { someservice } from "someserviceapis"; // imaginary auth provider
+    import { someservice } from "someserviceapis"; // imaginary service
     import { share, useMemory } from "mem-box";
 
     // ...
