@@ -24,7 +24,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Modules</li><li class="nav-heading"><span class="nav-item-type type-module">M</span><span class="nav-item-name"><a href="module-memory.html">memory</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-memory.html#~memory">memory</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-memory.html#~share">share</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-memory.html#~useMemory">useMemory</a></span></li>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Modules</li><li class="nav-heading"><span class="nav-item-type type-module">M</span><span class="nav-item-name"><a href="module-memory.html">memory</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-memory.html#~share">share</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="module-memory.html#~useMemory">useMemory</a></span></li>
 </nav>
 
 <div id="main">
@@ -51,30 +51,30 @@
         <article><h1>mem-box</h1>
 <p>Shared memory.</p>
 <p><a href="https://www.npmjs.com/package/mem-box"><img src="https://img.shields.io/npm/v/mem-box.svg" alt="npm version"></a>
-<a href="https://www.npmjs.com/package/mem-box"><img src="https://img.shields.io/npm/l/mem-box.svg" alt="npm license"></a>
-<a href="https://github.com/drmats/mem-box"><img src="https://img.shields.io/github/languages/top/drmats/mem-box.svg" alt="GitHub top language"></a>
 <a href="https://github.com/drmats/mem-box"><img src="https://img.shields.io/github/languages/code-size/drmats/mem-box.svg" alt="GitHub code size"></a>
-<a href="https://github.com/drmats/mem-box"><img src="https://img.shields.io/github/tag/drmats/mem-box.svg" alt="GitHub tag"></a></p>
+<a href="https://github.com/drmats/mem-box"><img src="https://img.shields.io/github/tag/drmats/mem-box.svg" alt="GitHub tag"></a>
+<a href="https://www.npmjs.com/package/mem-box"><img src="https://img.shields.io/npm/l/mem-box.svg" alt="npm license"></a></p>
 <pre class="prettyprint source lang-bash"><code>$ npm i mem-box
 </code></pre>
 <br />
 <h2>shared memory pattern</h2>
 <p>Frontend and backend applications often use some globally-configured objects,
 like <code>axios</code> instance with custom headers and base url, authenticated cloud
-services provider, <code>express.js</code> instance, database connection object,
+services provider instance, <code>express.js</code> instance, database connection object,
 configured <code>redux</code> store, etc...</p>
-<p>One might stick these to <code>window</code> (or <code>global</code>) object, but it's considered
+<p>One might stick these to <code>window</code> (or <code>global</code>) object, but it's considered an
 anti-pattern.</p>
 <p>Another solution is to pass these objects as parameters to functions that
 needs to use them, but it's cumbersome and scales poorly.</p>
-<p>Using <code>mem-box</code> solves these problems and resembles the usage of Hooks
-in React.</p>
-<p>Example:</p>
+<p>Using <code>mem-box</code> solves these problems and resembles the usage of <code>hooks</code>
+in <code>react</code>.</p>
+<br />
+<h2>example</h2>
 <ul>
 <li>
-<p><code>main.js</code> file of an express.js-based microservice application:</p>
-<pre class="prettyprint source lang-javascript"><code>import express, { json } from &quot;express&quot;;
-import { share } from &quot;mem-box/memory&quot;;
+<p><code>main.js</code> file of an <code>express.js</code>-based microservice application:</p>
+<pre class="prettyprint source lang-javascript"><code>import express from &quot;express&quot;;
+import { share } from &quot;mem-box&quot;;
 import configureRoutes from &quot;./routes&quot;;
 
 // main express application
@@ -83,17 +83,8 @@ const app = express();
 // share it with any other module interested
 share({ app });
 
-// some configuration
-app.enable(&quot;trust proxy&quot;);
-app.use(json());
-
 // complex configuration - e.g. enable CORS,
 // authentication, redirects, etc.
-
-// configureHeaders();
-// configureAuth();
-// configureRedirects();
-
 // ...
 
 // routes configuration
@@ -104,7 +95,7 @@ app.listen(/* ... */);
 </li>
 <li>
 <p>example <code>routes.js</code> file:</p>
-<pre class="prettyprint source lang-javascript"><code>import { useMemory } from &quot;mem-box/memory&quot;;
+<pre class="prettyprint source lang-javascript"><code>import { useMemory } from &quot;mem-box&quot;;
 
 export default configureRoutes () {
 
@@ -116,6 +107,88 @@ export default configureRoutes () {
         res.status(200).send({ hello: &quot;world&quot; });
         return next();
     });
+
+}
+</code></pre>
+</li>
+</ul>
+<br />
+<h2>usage with <a href="https://www.typescriptlang.org/">typescript</a></h2>
+<p>In order to provide type-safety (and nice
+<a href="https://code.visualstudio.com/docs/editor/intellisense">IntelliSense</a> hints)
+<a href="https://www.typescriptlang.org/docs/handbook/declaration-merging.html">declaration merging</a>
+typescript feature can be utilized.</p>
+<ul>
+<li>
+<p><code>main.ts</code> file of an <code>express.js</code>-based microservice application:</p>
+<pre class="prettyprint source lang-typescript"><code>import express from &quot;express&quot;;
+import { share } from &quot;mem-box&quot;;
+import configureAuth from &quot;./auth&quot;;
+
+// main express application
+const app = express();
+
+// private key (read from env or keystore in real-world)
+const secretKey = &quot;-----BEGIN PRIVATE KEY-----\nMIIEvqhkiGwggSiAgEqh...&quot;;
+
+// share with other modules
+share({ app, secretKey });
+
+// authentication config (based on external service provider)
+configureAuth();
+
+// ...
+
+app.listen(/* ... */);
+
+// global declaration merging
+declare global {
+
+    // shared memory type augmentation
+    interface Mem {
+        app: ReturnType&lt;typeof express>;
+        secretKey: string;
+    }
+
+}
+</code></pre>
+</li>
+<li>
+<p>example <code>auth.ts</code> file:</p>
+<pre class="prettyprint source lang-typescript"><code>import type { RequestHandler } from &quot;express&quot;;
+import { someservice } from &quot;someserviceapis&quot;; // imaginary auth provider
+import { share, useMemory } from &quot;mem-box&quot;;
+
+// ...
+export default configureAuth (): void {
+
+    // get access to secret (explicit type hint)
+    const { secretKey } = useMemory&lt;Mem>();
+
+    // obtain JSON Web Token from external provider
+    const jwt = new someservice.auth.JWT({
+        secretKey, /* scopes: [...], subject: ..., */
+    });
+
+    // build middleware for usage in other modules
+    const authMw: RequestHandler = (req, res, next) => {
+        // do something with `jwt` const
+        // ...
+        return next();
+    };
+
+    // share it
+    share({ authMw });
+
+}
+
+// inform type system of a new member in `Mem` interface
+declare global {
+
+    // shared memory type augmentation
+    interface Mem {
+        authOrigin: RequestHandler;
+    }
 
 }
 </code></pre>
@@ -136,6 +209,7 @@ export default configureRoutes () {
   share: [Function: share] }
 </code></pre>
 </blockquote>
+<br />
 <h2>notes</h2>
 <p>This library is suitable to use in server and browser environments
 and it is being used as such.
@@ -165,7 +239,7 @@ for more details.</p></article>
 <br class="clear">
 
 <footer>
-    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a> on Thu Jan 21 2021 12:29:29 GMT+0100 (Central European Standard Time) using the Minami theme.
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a> on Sat Jan 23 2021 18:30:06 GMT+0100 (Central European Standard Time) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>
