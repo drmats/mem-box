@@ -158,7 +158,7 @@ typescript feature can be utilized.
 
     }
 
-    // inform type system of new member in `Mem` interface
+    // inform type system of a new member in `Mem` interface
     declare global {
 
         // shared memory type augmentation
