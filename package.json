@@ -11,7 +11,7 @@
     ],
     "dependencies": {
         "@babel/runtime-corejs3": "^7.12.5",
-        "@xcmats/js-toolbox": "^0.10.1"
+        "@xcmats/js-toolbox": "^0.11.0"
     },
     "description": "Shared memory.",
     "devDependencies": {
@@ -43,12 +43,12 @@
     "files": [
         "dist"
     ],
-    "homepage": "https://github.com/drmats/mem-box",
+    "homepage": "https://drmats.github.io/mem-box/",
     "keywords": [
         "es6",
-        "memory",
         "javascript",
-        "library",
+        "memory",
+        "shared-memory",
         "typescript"
     ],
     "license": "Apache-2.0",
