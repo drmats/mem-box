@@ -163,7 +163,7 @@ typescript feature can be utilized.
 
         // shared memory type augmentation
         interface Mem {
-            authOrigin: RequestHandler;
+            authMw: RequestHandler;
         }
 
     }
