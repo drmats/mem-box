@@ -11,7 +11,7 @@
     ],
     "dependencies": {
         "@babel/runtime-corejs3": "^7.12.13",
-        "@xcmats/js-toolbox": "^0.11.1"
+        "@xcmats/js-toolbox": "^0.12.0"
     },
     "description": "Shared memory.",
     "devDependencies": {
