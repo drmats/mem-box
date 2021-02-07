@@ -12,7 +12,6 @@ var
         writeFileSync,
     } = require("fs"),
 
-    srcDir = "./src",
     distDir = "./dist",
 
     esConfig = mn => ({
@@ -36,11 +35,11 @@ console.info("Copying module configs ...");
 // copy src type files and es configs to dist directory
 require("./module_names")
     .forEach(mn => {
-        let src = `${srcDir}/${mn}`, dst = `${distDir}/${mn}`;
+        let dst = `${distDir}/${mn}`;
         mkdirSync(dst, { recursive: true });
         writeFileSync(
             `${dst}/package.json`,
-            JSON.stringify(esConfig(mn))
+            JSON.stringify(esConfig(mn)),
         );
     });
 
@@ -58,8 +57,8 @@ writeFileSync(
     JSON.stringify(
         Object.entries(distJson)
             .sort(([a, _1], [b, _2]) => a.localeCompare(b))
-            .reduce((acc, [k, v]) => ({ ...acc, [k]: v }), {})
-    )
+            .reduce((acc, [k, v]) => ({ ...acc, [k]: v }), {}),
+    ),
 );
 
 
