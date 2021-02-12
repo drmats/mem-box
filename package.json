@@ -11,18 +11,18 @@
     ],
     "dependencies": {
         "@babel/runtime-corejs3": "^7.12.13",
-        "@xcmats/js-toolbox": "^0.12.1"
+        "@xcmats/js-toolbox": "^0.12.2"
     },
     "description": "Shared memory.",
     "devDependencies": {
-        "@babel/cli": "^7.12.13",
-        "@babel/core": "^7.12.13",
-        "@babel/eslint-parser": "^7.12.13",
+        "@babel/cli": "^7.12.16",
+        "@babel/core": "^7.12.16",
+        "@babel/eslint-parser": "^7.12.16",
         "@babel/plugin-proposal-class-properties": "^7.12.13",
         "@babel/plugin-proposal-export-namespace-from": "^7.12.13",
         "@babel/plugin-transform-runtime": "^7.12.15",
-        "@babel/preset-env": "^7.12.13",
-        "@babel/preset-typescript": "^7.12.13",
+        "@babel/preset-env": "^7.12.16",
+        "@babel/preset-typescript": "^7.12.16",
         "@typescript-eslint/eslint-plugin": "^4.15.0",
         "@typescript-eslint/parser": "^4.15.0",
         "babel-plugin-inline-json-import": "^0.3.2",
@@ -34,7 +34,7 @@
         "jsdoc-babel": "^0.5.0",
         "minami": "^1.2.3",
         "rimraf": "^3.0.2",
-        "typescript": "^4.1.4"
+        "typescript": "^4.1.5"
     },
     "engines": {
         "node": ">=12.0.0",
