@@ -1,4 +1,5 @@
 {
+    "author": "Mat.",
     "bugs": {
         "url": "https://github.com/drmats/mem-box/issues"
     },
@@ -87,5 +88,5 @@
         "type-check": "tsc --noEmit"
     },
     "typings": "dist/index.d.ts",
-    "version": "1.0.8"
+    "version": "1.0.9"
 }
