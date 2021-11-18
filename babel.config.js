@@ -1,14 +1,22 @@
+/**
+ * Babel config.
+ *
+ * @license Apache-2.0
+ * @copyright Mat. 2018-present
+ * @author drmats
+ */
+
 "use strict"
 
 
 
 
 // ...
-var
+const
 
     runtimeVersion = require(
         "./package.json",
-    ).dependencies["@babel/runtime-corejs3"],
+    ).dependencies["@babel/runtime-corejs3"].replace(/^\^?(.*)/, (_, m) => m),
 
     conf = {
         plugins: [
@@ -59,7 +67,7 @@ module.exports = function (api) {
                             modules: "commonjs",
                             useBuiltIns: false,
                             targets: {
-                                node: "12.0.0",
+                                node: "14.0.0",
                             },
                         },
                     ],
