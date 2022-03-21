@@ -11,28 +11,28 @@
         }
     ],
     "dependencies": {
-        "@xcmats/js-toolbox": "^0.14.3"
+        "@xcmats/js-toolbox": "^0.14.5"
     },
     "description": "Shared memory.",
     "devDependencies": {
-        "@babel/cli": "7.16.7",
-        "@babel/core": "7.16.7",
-        "@babel/eslint-parser": "7.16.5",
+        "@babel/cli": "7.17.6",
+        "@babel/core": "7.17.8",
+        "@babel/eslint-parser": "7.17.0",
         "@babel/plugin-proposal-export-namespace-from": "7.16.7",
-        "@babel/preset-env": "7.16.7",
+        "@babel/preset-env": "7.16.11",
         "@babel/preset-typescript": "7.16.7",
-        "@typescript-eslint/eslint-plugin": "5.9.0",
-        "@typescript-eslint/parser": "5.9.0",
+        "@typescript-eslint/eslint-plugin": "5.15.0",
+        "@typescript-eslint/parser": "5.15.0",
         "babel-plugin-inline-json-import": "0.3.2",
         "cross-env": "7.0.3",
-        "eslint": "8.6.0",
+        "eslint": "8.11.0",
         "eslint-plugin-import": "2.25.4",
         "gh-pages": "3.2.3",
-        "jsdoc": "3.6.7",
+        "jsdoc": "3.6.10",
         "jsdoc-babel": "0.5.0",
         "minami": "1.2.3",
         "rimraf": "3.0.2",
-        "typescript": "4.5.4"
+        "typescript": "4.6.2"
 
     },
     "engines": {
