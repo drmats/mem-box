@@ -11,7 +11,7 @@
         }
     ],
     "dependencies": {
-        "@xcmats/js-toolbox": ">=0.16.0 <0.20.0"
+        "@xcmats/js-toolbox": ">=0.16.1 <0.20.0"
     },
     "description": "Shared memory.",
     "devDependencies": {
