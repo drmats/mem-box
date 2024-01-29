@@ -3,30 +3,25 @@
  *
  * @license Apache-2.0
  * @copyright Mat. 2018-present
- * @author drmats
  */
 
-"use strict"
-
-
-
+"use strict";
 
 // ...
 const
 
     conf = {
         plugins: [
-            "babel-plugin-inline-json-import",
-            "@babel/plugin-proposal-export-namespace-from",
+            "@babel/plugin-transform-export-namespace-from",
         ],
-    }
+    };
 
 
 
 
 // configuration
 module.exports = function (api) {
-    api.cache.using(() => process.env.BABEL_ENV)
+    api.cache.using(() => process.env.BABEL_ENV);
     // eslint-disable-next-line
     console.log(`Compiling for '${api.env()}' ...`)
 
@@ -61,7 +56,7 @@ module.exports = function (api) {
                             ],
                             modules: "commonjs",
                             targets: {
-                                node: "14.0.0",
+                                node: "16.0.0",
                             },
                             useBuiltIns: false,
                         },
@@ -101,5 +96,5 @@ module.exports = function (api) {
             },
 
         },
-    }
-}
+    };
+};
