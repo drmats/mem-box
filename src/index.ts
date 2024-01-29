@@ -2,7 +2,7 @@
  * Mem-box.
  *
  * @license Apache-2.0
- * @author drmats
+ * @copyright Mat. 2018-present
  */
 
 
@@ -14,5 +14,5 @@
 export {
     useMemory,
     share,
-} from "./memory";
-export * as memory from "./memory";
+} from "./memory/logic";
+export * as memory from "./memory/logic";

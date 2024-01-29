@@ -3,16 +3,14 @@
  *
  * @module memory
  * @license Apache-2.0
- * @author drmats
+ * @copyright Mat. 2018-present
  */
 
 
 
 
-import {
-    identity,
-    lazyish,
-} from "@xcmats/js-toolbox/func";
+import type { JSAnyObj } from "@xcmats/js-toolbox/type";
+import { identity, lazyish } from "@xcmats/js-toolbox/func";
 import { assign } from "@xcmats/js-toolbox/struct";
 
 
@@ -25,7 +23,7 @@ import { assign } from "@xcmats/js-toolbox/struct";
  * @function memory
  * @returns memory object
  */
-const memory = lazyish({});
+const memory = lazyish<JSAnyObj>({});
 
 
 
@@ -37,7 +35,7 @@ const memory = lazyish({});
  * @param f function to invoke on a shared memory
  * @returns {*}
  */
-export function useMemory<T> (f: (x: T) => T = identity): T {
+export function useMemory<T extends JSAnyObj> (f: (x: T) => T = identity): T {
     return f(memory() as T);
 }
 
@@ -52,6 +50,6 @@ export function useMemory<T> (f: (x: T) => T = identity): T {
  * @param ext extension object
  * @returns extended memory object
  */
-export function share<T> (ext: T): T {
+export function share<T extends JSAnyObj> (ext: T): T {
     return useMemory((ctx) => assign(ctx, ext));
 }
